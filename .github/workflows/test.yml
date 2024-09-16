@@ -19,11 +19,13 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0 # Perform a full clone to get all commit history
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.x' # Specify your .NET version
+        dotnet-version: '7.x' # Specify your .NET version
 
     - name: Restore dependencies
       run: dotnet restore
