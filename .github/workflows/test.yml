@@ -43,10 +43,15 @@ jobs:
     - name: Start WinAppDriver
       run: |
         echo Starting WinAppDriver...
-        Start-Process -FilePath "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe" -NoNewWindow -PassThru -Wait
+        Start-Process -FilePath "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe" -ArgumentList "/v" -NoNewWindow -PassThru -Wait
+      background: true
 
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Run UI Tests
+      run: |
+        echo Running UI Tests...
+        dotnet test --no-build --verbosity normal
+      # Ensure that this step is executed only after WinAppDriver has been started
+      needs: [Start WinAppDriver]
 
     - name: Publish
       if: github.ref == 'refs/heads/main'
