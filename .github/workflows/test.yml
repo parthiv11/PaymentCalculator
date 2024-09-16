@@ -38,7 +38,7 @@ jobs:
         echo Downloading WinAppDriver...
         Invoke-WebRequest -Uri https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi -OutFile WinAppDriver_1.2.1.msi
         echo Installing WinAppDriver...
-        Start-Process -FilePath msiexec.exe -ArgumentList '/i WinAppDriver_1.2.1.msi /quiet /norestart' -NoNewWindow -Wait -Verb RunAs
+        Start-Process -FilePath msiexec.exe -ArgumentList '/i WinAppDriver_1.2.1.msi /quiet /norestart' -NoNewWindow -Wait
 
     - name: Start WinAppDriver
       run: |
