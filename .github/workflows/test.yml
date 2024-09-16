@@ -1,4 +1,4 @@
-name: .NET Build and Test
+name: .NET Build and UI Test
 
 on:
   push:
@@ -32,6 +32,18 @@ jobs:
 
     - name: Build
       run: dotnet build --no-restore
+
+    - name: Install WinAppDriver
+      run: |
+        echo Downloading WinAppDriver...
+        Invoke-WebRequest -Uri https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi -OutFile WinAppDriver_1.2.1.msi
+        echo Installing WinAppDriver...
+        Start-Process -FilePath msiexec.exe -ArgumentList '/i WinAppDriver_1.2.1.msi /quiet /norestart' -NoNewWindow -Wait -Verb RunAs
+
+    - name: Start WinAppDriver
+      run: |
+        echo Starting WinAppDriver...
+        Start-Process -FilePath "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe" -NoNewWindow -PassThru -Wait
 
     - name: Test
       run: dotnet test --no-build --verbosity normal
