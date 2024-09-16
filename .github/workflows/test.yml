@@ -43,7 +43,8 @@ jobs:
     - name: Start WinAppDriver
       run: |
         echo Starting WinAppDriver...
-        start cmd /c "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe"
+        Start-Process powershell.exe -ArgumentList "-Command `"Start-Process -FilePath 'C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe' -NoNewWindow`"" -NoNewWindow
+
       
 
     - name: Run UI Tests
