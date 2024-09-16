@@ -44,7 +44,7 @@ jobs:
       run: |
         echo Starting WinAppDriver...
         Start-Process -FilePath "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe" -ArgumentList "/v" -NoNewWindow -PassThru -Wait
-      background: true
+      
 
     - name: Run UI Tests
       run: |
