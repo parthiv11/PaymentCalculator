@@ -50,7 +50,7 @@ jobs:
     - name: Run UI Tests
       run: |
         echo Running UI Tests...
-        dotnet test --configuration Release tests/PaymentCalculator.UITest/PaymentCalculator.UITest.csproj
+        dotnet test tests/PaymentCalculator.UITest/PaymentCalculator.UITest.csproj
 
     - name: Publish
       if: github.ref == 'refs/heads/main'
