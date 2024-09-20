@@ -35,8 +35,5 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Run UI Tests
-      run: dotnet test ${{ env.UI_TEST_PROJECT }}
+      run: dotnet test --no-restore ${{ env.UI_TEST_PROJECT }}
 
-    - name: Publish
-      if: github.ref == 'refs/heads/main'
-      run: dotnet publish -c Release -o ${{ env.PUBLISH_OUTPUT }}
