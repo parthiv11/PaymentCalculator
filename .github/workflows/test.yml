@@ -12,46 +12,33 @@ on:
       - develop
       - main
 
+env:
+  DOTNET_VERSION: '7.x'
+  UI_TEST_PROJECT: 'tests/PaymentCalculator.UITest/PaymentCalculator.UITest.csproj'
+  PUBLISH_OUTPUT: 'publish'
+
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Code
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 0 # Perform a full clone to get all commit history
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.x' # Specify your .NET version
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Restore dependencies
+    - name: Restore Dependencies
       run: dotnet restore
 
     - name: Build
       run: dotnet build --no-restore
 
-    # - name: Install WinAppDriver
-    #   run: |
-    #     echo Downloading WinAppDriver...
-    #     Invoke-WebRequest -Uri https://github.com/microsoft/WinAppDriver/releases/download/v1.2.1/WindowsApplicationDriver_1.2.1.msi -OutFile WinAppDriver_1.2.1.msi
-    #     echo Installing WinAppDriver...
-    #     Start-Process -FilePath msiexec.exe -ArgumentList '/i WinAppDriver_1.2.1.msi /quiet /norestart' -NoNewWindow -Wait
-
-    # - name: Start WinAppDriver
-    #   run: |
-    #     echo Starting WinAppDriver...
-    #     Start-Process powershell.exe -ArgumentList "-Command `"Start-Process -FilePath 'C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe' -NoNewWindow`"" -NoNewWindow
-
-      
-
     - name: Run UI Tests
-      run: |
-        echo Running UI Tests...
-        dotnet test tests/PaymentCalculator.UITest/PaymentCalculator.UITest.csproj
+      run: dotnet test ${{ env.UI_TEST_PROJECT }}
 
     - name: Publish
       if: github.ref == 'refs/heads/main'
-      run: dotnet publish -c Release -o publish
+      run: dotnet publish -c Release -o ${{ env.PUBLISH_OUTPUT }}
